@@ -141,14 +141,14 @@ class WebGraph():
             a = torch.zeros(n)
 
             z = torch.sparse.sum(self.P, 1)
-            
-            x = x0
-            
+                        
             for i in range(0,n):
                 if z[i] == 0:
                     a[i] = 1
                 else:
                     a[i] = 0
+            
+            x = x0
             
             for i in range(0,max_iterations):
                 x_new = x 
