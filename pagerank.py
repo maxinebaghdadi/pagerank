@@ -138,11 +138,11 @@ class WebGraph():
 
             # main loop
             # FIXME: your code goes here
-            x = x0.squeeze()
             a = torch.zeros(n)
 
-            z = row_sums = torch.sparse.sum(self.P, 1)
-
+            z = torch.sparse.sum(self.P, 1)
+            
+            x = x0
             
             for i in range(0,n):
                 if z[i] == 0:
