@@ -157,7 +157,10 @@ class WebGraph():
                 leftside = torch.sparse.mm(self.P.t(), alpha_x.t()).t() 
                 rightside = (a * alpha * x_new() + (1-alpha))*v.t()
 
-                x = (leftside + rightside) < epsilon:
+                x = (leftside + rightside) < epsilon
+                
+                
+                if torch.norm(x - x_new) < epsilon:
                     break 
 
             return x.squeeze() 
