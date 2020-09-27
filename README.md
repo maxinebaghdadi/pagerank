@@ -2,6 +2,7 @@
 
 This repo implements Sergey Brin and Larry Pages' Page Rank search algorithm for the website https://www.lawfareblog.com
 
+## Task One
 **Part One**
 ```
 python3 pagerank.py --data=./small.csv.gz --verbose
@@ -146,4 +147,65 @@ INFO:root:rank=6 pagerank=1.6754e+02 url=www.lawfareblog.com/lawfare-podcast-for
 INFO:root:rank=7 pagerank=1.6423e+02 url=www.lawfareblog.com/what-make-first-day-impeachment-hearings
 INFO:root:rank=8 pagerank=1.6423e+02 url=www.lawfareblog.com/livestream-house-armed-services-committee-hearing-f-35-program
 INFO:root:rank=9 pagerank=1.6415e+02 url=www.lawfareblog.com/whats-house-resolution-impeachment
+```
+
+## Task Two
+
+**Part One**
+```
+python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='corona'
+INFO:root:rank=0 pagerank=4.8010e+00 url=www.lawfareblog.com/covid-19-speech-and-surveillance-response
+INFO:root:rank=1 pagerank=4.8008e+00 url=www.lawfareblog.com/lawfare-live-covid-19-speech-and-surveillance
+INFO:root:rank=2 pagerank=9.8843e-01 url=www.lawfareblog.com/chinatalk-how-party-takes-its-propaganda-global
+INFO:root:rank=3 pagerank=5.7034e-01 url=www.lawfareblog.com/trump-cant-reopen-country-over-state-objections
+INFO:root:rank=4 pagerank=5.3873e-01 url=www.lawfareblog.com/rational-security-my-corona-edition
+INFO:root:rank=5 pagerank=5.3873e-01 url=www.lawfareblog.com/brexit-not-immune-coronavirus
+INFO:root:rank=6 pagerank=5.0694e-01 url=www.lawfareblog.com/prosecuting-purposeful-coronavirus-exposure-terrorism
+INFO:root:rank=7 pagerank=5.0694e-01 url=www.lawfareblog.com/britains-coronavirus-response
+INFO:root:rank=8 pagerank=4.8629e-01 url=www.lawfareblog.com/lawfare-podcast-mom-and-dad-talk-clinical-trials-pandemic
+INFO:root:rank=9 pagerank=4.4195e-01 url=www.lawfareblog.com/lawfare-podcast-united-nations-and-coronavirus-crisis
+```
+
+```
+python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --search_query='corona'
+INFO:root:rank=0 pagerank=7.0192e-01 url=www.lawfareblog.com/congress-needs-coronavirus-failsafe-its-too-late
+INFO:root:rank=1 pagerank=3.5540e-01 url=www.lawfareblog.com/house-oversight-committee-holds-day-two-hearing-government-coronavirus-response
+INFO:root:rank=2 pagerank=3.0870e-01 url=www.lawfareblog.com/britains-coronavirus-response
+INFO:root:rank=3 pagerank=3.0641e-01 url=www.lawfareblog.com/prosecuting-purposeful-coronavirus-exposure-terrorism
+INFO:root:rank=4 pagerank=3.0105e-01 url=www.lawfareblog.com/livestream-house-oversight-committee-holds-hearing-government-coronavirus-response
+INFO:root:rank=5 pagerank=2.9014e-01 url=www.lawfareblog.com/paper-hearing-experts-debate-digital-contact-tracing-and-coronavirus-privacy-concerns
+INFO:root:rank=6 pagerank=2.6583e-01 url=www.lawfareblog.com/why-congress-conducting-business-usual-face-coronavirus
+INFO:root:rank=7 pagerank=1.6576e-01 url=www.lawfareblog.com/lawfare-podcast-united-nations-and-coronavirus-crisis
+INFO:root:rank=8 pagerank=1.5861e-01 url=www.lawfareblog.com/israeli-emergency-regulations-location-tracking-coronavirus-carriers
+INFO:root:rank=9 pagerank=1.1787e-01 url=www.lawfareblog.com/congressional-homeland-security-committees-seek-ways-support-state-federal-responses-coronavirus
+```
+
+**Part Two**
+```
+python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='corona' --search_query='-corona'
+INFO:root:rank=0 pagerank=4.8010e+00 url=www.lawfareblog.com/covid-19-speech-and-surveillance-response
+INFO:root:rank=1 pagerank=4.8008e+00 url=www.lawfareblog.com/lawfare-live-covid-19-speech-and-surveillance
+INFO:root:rank=2 pagerank=9.8843e-01 url=www.lawfareblog.com/chinatalk-how-party-takes-its-propaganda-global
+INFO:root:rank=3 pagerank=5.7034e-01 url=www.lawfareblog.com/trump-cant-reopen-country-over-state-objections
+INFO:root:rank=4 pagerank=4.8629e-01 url=www.lawfareblog.com/lawfare-podcast-mom-and-dad-talk-clinical-trials-pandemic
+INFO:root:rank=5 pagerank=4.2211e-01 url=www.lawfareblog.com/fault-lines-foreign-policy-quarantined
+INFO:root:rank=6 pagerank=4.1513e-01 url=www.lawfareblog.com/limits-world-health-organization
+INFO:root:rank=7 pagerank=3.7045e-01 url=www.lawfareblog.com/chinatalk-dispatches-shanghai-beijing-and-hong-kong
+INFO:root:rank=8 pagerank=3.2373e-01 url=www.lawfareblog.com/trump-cant-play-politics-aid-states
+INFO:root:rank=9 pagerank=3.1845e-01 url=www.lawfareblog.com/lawfare-podcast-former-congressman-brian-baird-and-daniel-schuman-how-congress-can-continue-function
+```
+
+**Part Three**
+```
+python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='philippines' --search_query='lebanon'
+INFO:root:rank=0 pagerank=3.9626e-03 url=www.lawfareblog.com/country-fire-lebanons-october-revolution-context
+INFO:root:rank=1 pagerank=1.5163e-09 url=www.lawfareblog.com/lebanon-making-fragile-progress-now-wrong-time-pull-us-assistance
+INFO:root:rank=2 pagerank=0.0000e+00 url=www.lawfareblog.com/dispatch-1-tragic-choices-lebanon-overwhelmed
+INFO:root:rank=3 pagerank=0.0000e+00 url=www.lawfareblog.com/dispatch-3-strange-sectarian-peace-syrian-refugees-lebanon
+INFO:root:rank=4 pagerank=0.0000e+00 url=www.lawfareblog.com/another-war-lebanon
+INFO:root:rank=5 pagerank=0.0000e+00 url=www.lawfareblog.com/keeping-peace-lebanon
+INFO:root:rank=6 pagerank=0.0000e+00 url=www.lawfareblog.com/way-out-libya-conundrum-lebanon-and-somalia-analogies
+INFO:root:rank=7 pagerank=0.0000e+00 url=www.lawfareblog.com/lawfare-podcast-new-arab-spring-iraq-and-lebanon
+INFO:root:rank=8 pagerank=0.0000e+00 url=www.lawfareblog.com/lebanons-election-potential-departures-status-quo
+INFO:root:rank=9 pagerank=0.0000e+00 url=www.lawfareblog.com/lebanons-elections-beyond-iranian-saudi-rivalry
 ```
