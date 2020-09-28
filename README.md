@@ -3,7 +3,7 @@
 This repo implements Sergey Brin and Larry Pages' Page Rank search algorithm for the website https://www.lawfareblog.com
 
 ## Task One
-**Part One**
+**Part One:** Checking implementation of power method on small.csv.gz data 
 ```
 python3 pagerank.py --data=./small.csv.gz --verbose
 DEBUG:root:computing indices
@@ -15,7 +15,7 @@ INFO:root:rank=3 pagerank=6.9623e-01 url=2
 INFO:root:rank=4 pagerank=4.2704e-01 url=3
 INFO:root:rank=5 pagerank=3.9290e-01 url=1
 ```
-**Part Two**
+**Part Two:** Testing search_query with multiple strings 
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz --search_query='corona'
 INFO:root:rank=0 pagerank=3.0175e-02 url=www.lawfareblog.com/lawfare-podcast-united-nations-and-coronavirus-crisis
@@ -56,7 +56,7 @@ INFO:root:rank=7 pagerank=5.2631e-02 url=www.lawfareblog.com/trump-moves-cut-ira
 INFO:root:rank=8 pagerank=4.7311e-02 url=www.lawfareblog.com/us-names-iranian-revolutionary-guard-terrorist-organization-and-sanctions-international-criminal
 INFO:root:rank=9 pagerank=3.9046e-02 url=www.lawfareblog.com/iran-shoots-down-us-drone-domestic-and-international-legal-implications
 ```
-**Part Three**
+**Part Three:** The list of pages with the largest pagerank 
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz
 INFO:root:rank=0 pagerank=5.3262e+01 url=www.lawfareblog.com/litigation-documents-related-appointment-matthew-whitaker-acting-attorney-general
@@ -70,6 +70,8 @@ INFO:root:rank=7 pagerank=5.3262e+01 url=www.lawfareblog.com/our-comments-policy
 INFO:root:rank=8 pagerank=5.3262e+01 url=www.lawfareblog.com/upcoming-events
 INFO:root:rank=9 pagerank=5.3262e+01 url=www.lawfareblog.com/about-lawfare-brief-history-term-and-site
 ```
+
+Applying a filter ratio to to estimate the most important articles. This function removes all the pages that have more links than the specified fraction. 
 
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2
@@ -85,7 +87,8 @@ INFO:root:rank=8 pagerank=9.8176e+00 url=www.lawfareblog.com/summary-david-holme
 INFO:root:rank=9 pagerank=5.7312e+00 url=www.lawfareblog.com/events
 ```
 
-**Part Four**
+**Part Four:** Runtime of pagerank depends heavily on the eigengap of the $\bar\bar P$ matrix. It is bounded by an alpha parameter. I now compare previous commands with new ones that account for the alpha parameter. 
+
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz --verbose 
 DEBUG:root:computing indices
@@ -151,7 +154,7 @@ INFO:root:rank=9 pagerank=1.6415e+02 url=www.lawfareblog.com/whats-house-resolut
 
 ## Task Two
 
-**Part One**
+**Part One:** Implementing the WebGraph.make_personalization_vector function to enable the --personalization_vector_query command line argument. 
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='corona'
 INFO:root:rank=0 pagerank=4.8010e+00 url=www.lawfareblog.com/covid-19-speech-and-surveillance-response
@@ -165,6 +168,7 @@ INFO:root:rank=7 pagerank=5.0694e-01 url=www.lawfareblog.com/britains-coronaviru
 INFO:root:rank=8 pagerank=4.8629e-01 url=www.lawfareblog.com/lawfare-podcast-mom-and-dad-talk-clinical-trials-pandemic
 INFO:root:rank=9 pagerank=4.4195e-01 url=www.lawfareblog.com/lawfare-podcast-united-nations-and-coronavirus-crisis
 ```
+These results are significantly different to when compared to the --search_query option. 
 
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --search_query='corona'
@@ -180,7 +184,8 @@ INFO:root:rank=8 pagerank=1.5861e-01 url=www.lawfareblog.com/israeli-emergency-r
 INFO:root:rank=9 pagerank=1.1787e-01 url=www.lawfareblog.com/congressional-homeland-security-committees-seek-ways-support-state-federal-responses-coronavirus
 ```
 
-**Part Two**
+**Part Two:** Looking at webpages that relate to coronavirus but don't directly mention it.  
+
 ```
 python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='corona' --search_query='-corona'
 INFO:root:rank=0 pagerank=4.8010e+00 url=www.lawfareblog.com/covid-19-speech-and-surveillance-response
@@ -195,9 +200,9 @@ INFO:root:rank=8 pagerank=3.2373e-01 url=www.lawfareblog.com/trump-cant-play-pol
 INFO:root:rank=9 pagerank=3.1845e-01 url=www.lawfareblog.com/lawfare-podcast-former-congressman-brian-baird-and-daniel-schuman-how-congress-can-continue-function
 ```
 
-**Part Three**
+**Part Three:** Another example to coronavirus, I also looked into the query 'lebanon.'
 ```
-python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='philippines' --search_query='lebanon'
+python3 pagerank.py --data=./lawfareblog.csv.gz --filter_ratio=0.2 --personalization_vector_query='lebanon' --search_query='lebanon'
 INFO:root:rank=0 pagerank=3.9626e-03 url=www.lawfareblog.com/country-fire-lebanons-october-revolution-context
 INFO:root:rank=1 pagerank=1.5163e-09 url=www.lawfareblog.com/lebanon-making-fragile-progress-now-wrong-time-pull-us-assistance
 INFO:root:rank=2 pagerank=0.0000e+00 url=www.lawfareblog.com/dispatch-1-tragic-choices-lebanon-overwhelmed
