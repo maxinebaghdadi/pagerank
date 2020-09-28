@@ -45,6 +45,7 @@ INFO:root:rank=9 pagerank=1.3857e-01 url=www.lawfareblog.com/second-circuit-rule
 ```
 
 ```
+python3 pagerank.py --data=./lawfareblog.csv.gz --search_query='iran'
 INFO:root:rank=0 pagerank=4.2207e-01 url=www.lawfareblog.com/praise-presidents-iran-tweets
 INFO:root:rank=1 pagerank=1.9159e-01 url=www.lawfareblog.com/how-us-iran-tensions-could-disrupt-iraqs-fragile-peace
 INFO:root:rank=2 pagerank=1.1614e-01 url=www.lawfareblog.com/cyber-command-operational-update-clarifying-june-2019-iran-operation
@@ -122,6 +123,7 @@ INFO:root:rank=9 pagerank=1.3771e+03 url=www.lawfareblog.com/masthead
 ```
 
 ```
+python3 pagerank.py --data=./lawfareblog.csv.gz --verbose --filter_ratio=0.2
 DEBUG:root:computing indices
 DEBUG:root:computing values
 INFO:root:rank=0 pagerank=2.6856e+01 url=www.lawfareblog.com/trump-asks-supreme-court-stay-congressional-subpeona-tax-returns
