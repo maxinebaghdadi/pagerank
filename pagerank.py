@@ -9,9 +9,11 @@ import math
 import torch
 import gzip
 import csv
+import gensim.downloader
 
 import logging
 
+vectors = gensim.downloader.load('glove-twitter-200')
 
 class WebGraph():
 
@@ -104,10 +106,11 @@ class WebGraph():
 
         else:
             v = torch.zeros(n)
-            ##this is where i insert my code 
+            
             for i in range(n):
-                if url_satisfies_query(url=self._index_to_url(i), query = query):
-                    v[i] = 1 
+                url = self._index_to_url(i)
+                if url_satisfies_query(url, query):
+                    v[i] = 1
         
         v_sum = torch.sum(v)
         assert(v_sum>0)
@@ -137,32 +140,43 @@ class WebGraph():
             x0 /= torch.norm(x0)
 
             # main loop
-            # FIXME: your code goes here
+            # Create "a" vector
             a = torch.zeros(n)
+           
+            row_sums = torch.sparse.sum(self.P,1)
 
-            z = torch.sparse.sum(self.P, 1)
-                        
-            for i in range(0,n):
-                if z[i] == 0:
+            # If a row in P matrix consists all zeroes, add 1 to "a" vector
+            for i in range(n):
+                if row_sums[i] == 0:
                     a[i] = 1
                 else:
                     a[i] = 0
-            
+
+            # Initialize x 
             x = x0
-            
-            for i in range(0,max_iterations):
-                x_new = x 
-                alpha_x = alpha * x_new.t()
 
-                leftside = torch.sparse.mm(self.P.t(), alpha_x.t()).t() 
-                rightside = (a * alpha * x_new() + (1-alpha))*v.t()
+            for k in range (0, max_iterations):
+                # x1 is a new vector
+                x1 = x
 
-                x = (leftside + rightside).t()
+                alpha_x = alpha * x1.t()
                 
-                if torch.norm(x - x_new) < epsilon:
-                    break 
+                # Left side of the equation 5.1
+                lhs = alpha * torch.sparse.mm(self.P.t(),x1).t()
 
-            return x.squeeze() 
+                # Right side of the equation 5.1
+                rhs = (a * alpha * x1.t() + (1-alpha))*v.t()
+
+                # Creat x_curr vector by adding lefthand side and right hand side of the equation 
+                # 5.1 and taking the transpose of the resulting matrix
+                x = (lhs + rhs).t()
+
+                # Stop iterating when difference between vectors is less than epsilon
+                logging.debug('k = ' + str(k) + ' accuracy = ' + str(torch.norm(x1-x).item()))
+                if torch.norm(x - x1) < epsilon:
+                    break
+
+            return x.squeeze()
 
 
     def search(self, pi, query='', max_results=10):
@@ -211,6 +225,19 @@ def url_satisfies_query(url, query):
     '''
     satisfies = False
     terms = query.split()
+
+    # Task 1: Searches for the keywords in the query and the 5 most similar words
+    newList = []
+    for term in terms:
+        if term[0] == '-':
+            pass
+        else:
+            similar = vectors.most_similar(term)
+            for i in range(5):
+                newList.append(similar[i][0])
+
+    # Add the resulting words to the terms
+    terms.extend(newList)
 
     num_terms=0
     for term in terms:
