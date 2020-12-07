@@ -128,7 +128,7 @@ INFO:root:rank=9 pagerank=2.8859e-01 url=www.lawfareblog.com/litigation-document
 ```
 
 ```
-(base) Maxines-MBP:pagerank maxinebaghdadi$ python3 pagerank.py --data=./lawfareblog.csv.gz --verbose --filter_ratio=0.2
+python3 pagerank.py --data=./lawfareblog.csv.gz --verbose --filter_ratio=0.2
 INFO:root:rank=0 pagerank=3.4696e-01 url=www.lawfareblog.com/trump-asks-supreme-court-stay-congressional-subpeona-tax-returns
 INFO:root:rank=1 pagerank=2.9521e-01 url=www.lawfareblog.com/livestream-nov-21-impeachment-hearings-0
 INFO:root:rank=2 pagerank=2.9040e-01 url=www.lawfareblog.com/opening-statement-david-holmes
